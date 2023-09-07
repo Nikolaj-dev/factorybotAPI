@@ -1,6 +1,5 @@
 from datetime import timedelta
 from pathlib import Path
-import environ
 import os
 
 from django.conf import settings
@@ -8,18 +7,16 @@ from django.conf import settings
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-env = environ.Env()
-env.read_env(os.path.join(BASE_DIR, '.env'))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
+DEBUG = os.getenv('DEBUG')
 
-ALLOWED_HOSTS = [env('ALLOWED_HOSTS')]
+ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS')]
 
 
 # Application definition
@@ -72,12 +69,12 @@ WSGI_APPLICATION = 'TelegramAPIBot.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': env('DB_ENGINE'),
-        'NAME': env('DB_NAME'),
-        'PASSWORD': env('DB_PASSWORD'),
-        'HOST': env('DB_HOST'),
-        'USER': env('DB_USER'),
-        'PORT': env('DB_PORT'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('PGDATABASE'),
+        'PASSWORD': os.getenv('PGPASSWORD'),
+        'HOST': os.getenv('PGHOST'),
+        'USER': os.getenv('PGUSER'),
+        'PORT': os.getenv('PGPORT'),
     }
 }
 
@@ -106,7 +103,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = os.getenv('TIME_ZONE')
 
 USE_I18N = True
 
@@ -115,10 +112,10 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 
-STATIC_URL = env('STATIC_URL')
-MEDIA_URL = env('MEDIA_URL')
-MEDIA_ROOT = env('MEDIA_ROOT')
-STATIC_ROOT = env('STATIC_ROOT')
+STATIC_URL = os.getenv('STATIC_URL')
+MEDIA_URL = os.getenv('MEDIA_URL')
+MEDIA_ROOT = os.getenv('MEDIA_ROOT')
+STATIC_ROOT = os.getenv('STATIC_ROOT')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -174,4 +171,4 @@ SIMPLE_JWT = {
 
 
 LOGIN_REDIRECT_URL = 'token_obtain_pair'
-TELEGRAM_BOT_API_KEY = env('TELEGRAM_BOT_TOKEN')
+TELEGRAM_BOT_API_KEY = os.getenv('TELEGRAM_BOT_TOKEN')
