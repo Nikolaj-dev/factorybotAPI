@@ -4,7 +4,7 @@
         "builder": "NIXPACKS"
     },
     "deploy": {
-        "startCommand": "python manage.py migrate && python manage.py collectstatic --noinput && gunicorn --timeout 500 main.wsg",
+        "startCommand": "python manage.py migrate && python manage.py collectstatic --noinput && gunicorn --timeout 500 TelegramAPIbot.wsg",
         "restartPolicyType": "NEVER",
         "restartPolicyMaxRetries": 10
     }
